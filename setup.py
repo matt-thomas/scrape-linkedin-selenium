@@ -15,7 +15,7 @@ setup(name='scrape_linkedin',
       author="Austin O'Boyle",
       author_email='hello@austinoboyle.com',
       license='MIT',
-      url='https://github.com/austinoboyle/scrape-linkedin-selenium',
+      url='https://github.com/matt-thomas/scrape-linkedin-selenium',
       packages=['scrape_linkedin'],
       entry_points={'console_scripts': [
           'scrapeli=scrape_linkedin.cli:scrape']},
@@ -33,6 +33,7 @@ setup(name='scrape_linkedin',
           'bs4',
           'selenium',
           'click',
-          'joblib'
+          'joblib',
+          'webdriver-manager'
       ]
       )

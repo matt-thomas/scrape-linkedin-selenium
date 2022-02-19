@@ -19,7 +19,8 @@ from pprint import pprint
 
 import click
 from click import ClickException
-from selenium.webdriver import Chrome, Firefox
+from webdriver_manager.chrome import ChromeDriverManager, FirefoxDriverManager
+from selenium import webdriver
 
 from .CompanyScraper import CompanyScraper
 from .Profile import Profile
@@ -71,7 +72,18 @@ def scrape(url, user, company, attribute, input_file, headless, output_file, dri
     elif url:
         if 'LI_AT' not in os.environ:
             raise ClickException("Must set LI_AT environment variable")
-        driver_type = Firefox if driver == 'Firefox' else Chrome
+        if driver == 'Firefox':
+            firefox_options = webdriver.FirefoxOptions()
+            firefox_options.add_argument('--no-sandbox')
+            firefox_options.add_argument('--window-size=1420,1080')
+            driver_type = webdriver.Chrome(FirefoxDriverManager().install(), options=firefox_options)
+        else:
+            chrome_options = webdriver.ChromeOptions()
+            chrome_options.add_argument('--no-sandbox')
+            chrome_options.add_argument('--window-size=1420,1080')
+            # chrome_options.add_argument('--headless')
+            # chrome_options.add_argument('--disable-gpu')
+            driver_type = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
         if company:
             with CompanyScraper(driver=driver_type, cookie=os.environ['LI_AT'], driver_options=driver_options) as scraper:
                 profile = scraper.scrape(company=company)
