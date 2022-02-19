@@ -3,6 +3,7 @@ import time
 from abc import abstractmethod
 from os import environ
 
+from webdriver_manager.chrome import ChromeDriverManager
 import selenium.webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -40,7 +41,10 @@ class Scraper(object):
             return
 
         self.was_passed_instance = False
-        self.driver = driver(**driver_options)
+        if driver == selenium.webdriver.Chrome:
+            self.driver = driver(ChromeDriverManager().install(), options=driver_options)
+        else:
+            self.driver = driver(**driver_options)
         self.scroll_pause = scroll_pause
         self.scroll_increment = scroll_increment
         self.timeout = timeout

@@ -19,7 +19,8 @@ from pprint import pprint
 
 import click
 from click import ClickException
-from webdriver_manager.chrome import ChromeDriverManager, FirefoxDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium import webdriver
 
 from .CompanyScraper import CompanyScraper
@@ -76,7 +77,7 @@ def scrape(url, user, company, attribute, input_file, headless, output_file, dri
             firefox_options = webdriver.FirefoxOptions()
             firefox_options.add_argument('--no-sandbox')
             firefox_options.add_argument('--window-size=1420,1080')
-            driver_type = webdriver.Chrome(FirefoxDriverManager().install(), options=firefox_options)
+            driver_type = webdriver.Firefox(GeckoDriverManager().install(), options=firefox_options)
         else:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--no-sandbox')
